@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap');
+
+        :root {
+            --primary-color: #00c6ff;
+            --secondary-color: #0072ff;
+            --accent-color: #f7b733;
+            --text-color: #f0f0f0;
+            --bg-color: #1a1a2e; /* Dark blueish background */
+            --container-bg: rgba(255, 255, 255, 0.1);
+            --container-border: rgba(255, 255, 255, 0.2);
+            --button-glow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            --text-glow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px var(--accent-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 198, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(247, 183, 51, 0.2) 0%, transparent 50%);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: var(--container-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid var(--container-border);
+            animation: fadeInContainer 1s ease-out forwards;
+        }
+
+        @keyframes fadeInContainer {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #eid-gif {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        #festive-greeting {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientText 5s ease infinite, fadeInText 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            text-shadow: var(--text-glow);
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+
+        #name-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--container-border);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #name-input::placeholder {
+            color: rgba(240, 240, 240, 0.6);
+        }
+
+        #name-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .styled-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .styled-button:hover, .styled-button:focus {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--button-glow);
+            outline-color: var(--primary-color);
+        }
+        
+        .styled-button:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 2px 10px rgba(0, 198, 255, 0.2);
+        }
+
+        #custom-greeting-message {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            min-height: 50px; /* To prevent layout shift */
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #custom-greeting-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        #whatsapp-button {
+            background-color: #25D366; /* WhatsApp Green */
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            display: none; /* Hidden by default */
+        }
+        #whatsapp-button:hover, #whatsapp-button:focus {
+            box-shadow: 0 0 10px #25D366, 0 0 20px #25D366;
+            outline-color: #25D366;
+        }
+
+        #whatsapp-button svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            fill: white;
+        }
+
+        .audio-controls {
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 50px;
+        }
+
+        .audio-controls button {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .audio-controls button:hover {
+            background-color: #ffc75f; /* Lighter accent */
+            transform: scale(1.05);
+        }
+
+        .audio-controls input[type="range"] {
+            width: 100px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .audio-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .audio-controls input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            #festive-greeting {
+                font-size: 1.5em;
+            }
+            .container {
+                padding: 20px;
+            }
+            .styled-button {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+            .audio-controls {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            .audio-controls input[type="range"] {
+                width: 120px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="eid.gif" alt="Eid Celebration Animation" id="eid-gif">
+
+        <h1 id="festive-greeting">✨ Eid Mubarak! May this Eid bring joy, peace, and prosperity to all! ✨</h1>
+
+        <input type="text" id="name-input" placeholder="Enter your name">
+
+        <button id="generate-button" class="styled-button">Generate Eid Wish</button>
+
+        <div id="custom-greeting-message"></div>
+
+        <button id="whatsapp-button" class="styled-button">
+            <svg viewBox="0 0 24 24">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.33 3.43 16.79L2 22L7.32 20.55C8.73 21.33 10.34 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 3.64C16.57 3.64 20.31 7.38 20.31 11.91C20.31 16.44 16.57 20.18 12.04 20.18C10.46 20.18 8.96 19.72 7.69 18.9L7.32 18.68L4.43 19.53L5.3 16.74L5.06 16.37C4.24 15.03 3.77 13.5 3.77 11.91C3.77 7.38 7.49 3.64 12.04 3.64M17.27 14.25C17.07 14.15 15.94 13.6 15.72 13.5C15.51 13.41 15.35 13.36 15.18 13.61C15.02 13.85 14.51 14.45 14.35 14.61C14.18 14.76 14.02 14.81 13.81 14.71C13.6 14.61 12.76 14.31 11.76 13.41C11.01 12.72 10.49 11.88 10.33 11.64C10.16 11.39 10.27 11.27 10.39 11.15C10.5 11.04 10.64 10.85 10.78 10.68C10.91 10.53 10.96 10.41 11.06 10.2C11.16 10 11.11 9.83 11.04 9.71C10.96 9.58 10.47 8.36 10.27 7.86C10.08 7.37 9.88 7.42 9.75 7.41C9.61 7.41 9.45 7.41 9.28 7.41C9.12 7.41 8.86 7.46 8.64 7.7C8.42 7.95 7.92 8.43 7.92 9.46C7.92 10.5 8.67 11.52 8.79 11.67C8.91 11.82 10.47 14.14 12.73 15.01C13.29 15.25 13.71 15.39 14.04 15.49C14.62 15.67 15.05 15.64 15.39 15.56C15.78 15.47 16.71 14.92 16.88 14.52C17.05 14.13 17.05 13.8 17.01 13.7C16.96 13.6 16.88 13.55 16.71 13.46C16.54 13.36 17.48 14.35 17.27 14.25Z" />
+            </svg>
+            Share on WhatsApp
+        </button>
+
+    </div>
+
+    <div class="audio-controls">
+        <button id="mute-toggle">Mute</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
+    </div>
+    <audio id="background-music" src="song.mp3" autoplay loop></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('name-input');
+            const generateButton = document.getElementById('generate-button');
+            const customGreetingDiv = document.getElementById('custom-greeting-message');
+            const whatsappButton = document.getElementById('whatsapp-button');
+            
+            const backgroundMusic = document.getElementById('background-music');
+            const muteToggleButton = document.getElementById('mute-toggle');
+            const volumeSlider = document.getElementById('volume-slider');
+
+            // --- Audio Setup ---
+            // Set initial volume based on slider. Autoplay might be blocked initially by browser.
+            backgroundMusic.volume = parseFloat(volumeSlider.value);
+
+            // Try to play to handle browsers that might block autoplay without interaction
+            // The `autoplay` attribute is the main mechanism, this is a fallback attempt.
+            let playPromise = backgroundMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay started!
+                    updateMuteButtonText();
+                }).catch(error => {
+                    // Autoplay was prevented.
+                    console.warn("Autoplay prevented by browser. User interaction might be needed.", error);
+                    // Update button text to reflect that audio might not be playing.
+                    // We'll rely on the user to click mute/unmute or adjust volume to start.
+                    // Or, you could show a "Click to play audio" button here.
+                    updateMuteButtonText(); 
+                });
+            }
+            
+            function updateMuteButtonText() {
+                if (backgroundMusic.muted || backgroundMusic.volume === 0) {
+                    muteToggleButton.textContent = 'Unmute';
+                } else {
+                    muteToggleButton.textContent = 'Mute';
+                }
+            }
+
+            muteToggleButton.addEventListener('click', () => {
+                backgroundMusic.muted = !backgroundMusic.muted;
+                updateMuteButtonText();
+                // If unmuting and volume was 0, set to a default non-zero volume
+                if (!backgroundMusic.muted && backgroundMusic.volume === 0) {
+                    backgroundMusic.volume = 0.3; // Default volume
+                    volumeSlider.value = 0.3;
+                }
+            });
+
+            volumeSlider.addEventListener('input', () => {
+                backgroundMusic.volume = parseFloat(volumeSlider.value);
+                if (backgroundMusic.volume > 0) {
+                    backgroundMusic.muted = false;
+                }
+                updateMuteButtonText();
+            });
+            
+            // Initialize mute button text on load
+            // A timeout helps ensure audio state is more reliably determined after autoplay attempt
+            setTimeout(updateMuteButtonText, 200);
+
+
+            // --- Greeting Generation ---
+            generateButton.addEventListener('click', () => {
+                const name = nameInput.value.trim();
+                if (name) {
+                    const greeting = `Eid Mubarak from ${name}! 🎉 Wishing you happiness and blessings!`;
+                    customGreetingDiv.textContent = greeting;
+                    customGreetingDiv.classList.add('visible');
+                    whatsappButton.style.display = 'inline-flex';
+                } else {
+                    customGreetingDiv.textContent = 'Please enter your name to generate a wish.';
+                    customGreetingDiv.classList.add('visible');
+                    whatsappButton.style.display = 'none';
+                }
+            });
+
+            // --- WhatsApp Sharing ---
+            whatsappButton.addEventListener('click', () => {
+                const message = customGreetingDiv.textContent;
+                const siteUrl = window.location.href;
+                
+                if (message && !message.includes('Please enter your name')) {
+                    const whatsappMessage = `${message}\n\nCreate your own Eid greeting here: ${siteUrl}`;
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappMessage)}`;
+                    window.open(whatsappUrl, '_blank');
+                }
+            });
+
+            // Add a little sparkle animation on button click
+            const buttons = document.querySelectorAll('.styled-button');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'translateY(0px) scale(0.98)';
+                });
+                button.addEventListener('mouseup', function() {
+                    // Re-apply hover transform if still hovered
+                    if (this.matches(':hover')) {
+                         this.style.transform = 'translateY(-2px) scale(1.02)';
+                    } else {
+                        this.style.transform = 'translateY(0px) scale(1)';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
